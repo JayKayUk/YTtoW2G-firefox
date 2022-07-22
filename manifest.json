@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "YTtoW2G",
+  "description": "Adds a button on hover on YT videos, to add them to W2G playlist.",
+  "version": "1.0",
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["content-script.js"]
+    }
+  ]
+}
