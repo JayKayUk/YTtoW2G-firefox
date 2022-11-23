@@ -1,1 +1,1 @@
-# Chrome-extension-YTtoW2G
+# YTtoW2G-firefox
