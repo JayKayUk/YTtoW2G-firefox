@@ -14,10 +14,18 @@ const interval = setInterval(() => {
     for (let i = 0; i < arrayOfVideosTiles.length; i++) {
       // add button at the end of ytd-grid-video-render node on mouse enter. Need to getElementById because can't add listener to element that does not exist
       arrayOfVideosTiles[i].addEventListener("mouseenter", (e) => {
-        e.currentTarget.insertAdjacentHTML("beforeend", buttonHTMLstring);
+        const videoTile = e.currentTarget;
+        videoTile.insertAdjacentHTML("beforeend", buttonHTMLstring);
         const button = document.getElementById("YTtoW2G");
         button.addEventListener("click", () => {
-          console.log("YTtoW2G");
+          const videoURL = videoTile.querySelector("#thumbnail").href;
+          const thumbnailSource = videoTile.querySelector("img").src;
+          const videoTitle = videoTile.querySelector("#video-title").title;
+          browser.runtime.sendMessage({
+            url: videoURL,
+            thumb: thumbnailSource,
+            title: videoTitle,
+          });
         });
       });
 
