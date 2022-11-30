@@ -3,6 +3,10 @@
   "name": "YTtoW2G",
   "description": "Adds a button which sends YT videos to open W2G session",
   "version": "0.1",
+  "background": {
+    "scripts": ["src/background-script.js"],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/*"],
