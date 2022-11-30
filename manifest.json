@@ -1,12 +1,12 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 2,
   "name": "YTtoW2G",
-  "description": "Adds a button on hover on YT videos, to add them to W2G playlist.",
-  "version": "1.0",
+  "description": "Adds a button which sends YT videos to open W2G session",
+  "version": "0.1",
   "content_scripts": [
     {
-      "matches": ["https://*.youtube.com/*"],
-      "js": ["content-script.js"]
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["src/yt/main.js"]
     }
   ]
 }
