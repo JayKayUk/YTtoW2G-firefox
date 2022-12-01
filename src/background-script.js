@@ -6,4 +6,7 @@ browser.runtime.onInstalled.addListener(() => {
 
 browser.runtime.onMessage.addListener((message) => {
   console.log(message);
+  browser.tabs.query({ url: "https://w2g.tv/*/room/*" }).then((data) => {
+    console.log(data[0].id);
+  });
 });
