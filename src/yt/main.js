@@ -1,5 +1,9 @@
 "use strict";
 
+function stringSanitize(text) {
+  return text.replace(/['"`/\\]/g, "");
+}
+
 function addListeners() {
   // Run until arrayOfVideosTiles is filled in a grid mode old UI
   let arrayOfVideosTiles = [];
@@ -29,7 +33,10 @@ function addListeners() {
             button.addEventListener("click", () => {
               const videoURL = videoTile.querySelector("#thumbnail").href;
               const thumbnailSource = videoTile.querySelector("img").src;
-              const videoTitle = videoTile.querySelector("#video-title").title;
+              const videoTitle = stringSanitize(
+                videoTile.querySelector("#video-title").title
+              );
+              console.log(videoTitle);
               browser.runtime.sendMessage({
                 url: videoURL,
                 thumb: thumbnailSource,
