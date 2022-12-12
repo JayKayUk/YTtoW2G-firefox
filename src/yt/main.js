@@ -12,7 +12,9 @@ function addListeners() {
     arrayOfVideosTiles = document.getElementsByTagName(
       "ytd-grid-video-renderer"
     );
-    const buttonHTMLstring = "<button id='YTtoW2G'>Button</button>";
+    const buttonHTMLstring = `<button id='YTtoW2G'><img src='${browser.runtime.getURL(
+      "icons/main-icon-2048.png"
+    )}'></button>`;
     console.log(arrayOfVideosTiles.length, numberOfVideoPreAdding);
     if (
       numberOfVideoPreAdding % 100 === 0 &&

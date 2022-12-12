@@ -1,0 +1,20 @@
+#YTtoW2G {
+  position: absolute;
+  top: 0;
+  margin: 0.3em;
+  background-color: black;
+  border: none;
+  color: white;
+  border-radius: 10%;
+}
+
+#YTtoW2G:hover {
+  cursor: pointer;
+  background-color: dimgray;
+}
+
+#YTtoW2G img {
+  height: 1.5em;
+  width: 1.5em;
+  margin: 0.2em;
+}
