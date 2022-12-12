@@ -10,6 +10,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.youtube.com/*"],
+      "css": ["src/yt/style.css"],
       "js": ["src/yt/main.js"]
     },
     {
@@ -17,5 +18,6 @@
       "js": ["src/w2g/main.js"]
     }
   ],
-  "permissions": ["tabs"]
+  "permissions": ["tabs"],
+  "web_accessible_resources": ["icons/main-icon-2048.png"]
 }

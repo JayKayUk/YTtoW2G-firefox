@@ -1,0 +1,22 @@
+#YTtoW2G {
+  padding: 0.3em;
+  position: absolute;
+  top: 0;
+  margin: 0.3em;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border: none;
+  border-radius: 0.3em;
+}
+
+#YTtoW2G:hover {
+  cursor: pointer;
+  background-color: rgba(30, 30, 30, 0.8);
+}
+
+#YTtoW2G img {
+  display: block;
+  height: 1.3em;
+  width: 1.3em;
+  margin: 0.1em;
+}
