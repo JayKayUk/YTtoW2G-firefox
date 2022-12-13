@@ -31,7 +31,8 @@ function sendMsgToBgScript(videoTile) {
   const videoURL = videoTile.querySelector("#thumbnail").href;
   const thumbnailSource = videoTile.querySelector("img").src;
   const videoTitle = sanitizeString(
-    videoTile.querySelector("#video-title").title
+    videoTile.querySelector("#video-title").title ||
+      videoTile.querySelector("#video-title-link").title
   );
   browser.runtime.sendMessage({
     url: videoURL,
@@ -51,7 +52,8 @@ const observer = new MutationObserver((mutationList) => {
   for (let i = 0; i < mutationList.length; i++) {
     if (
       mutationList[i].target.tagName === "YTD-VIDEO-RENDERER" ||
-      mutationList[i].target.tagName === "YTD-GRID-VIDEO-RENDERER"
+      mutationList[i].target.tagName === "YTD-GRID-VIDEO-RENDERER" ||
+      mutationList[i].target.tagName === "YTD-RICH-ITEM-RENDERER"
     ) {
       mutationList[i].target.addEventListener("mouseenter", addButton);
       mutationList[i].target.addEventListener("mouseleave", removeButton);
