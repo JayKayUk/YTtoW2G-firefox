@@ -49,11 +49,13 @@ const observerOptions = { childList: true, subtree: true };
 const observerTarget = document;
 const observer = new MutationObserver((mutationList) => {
   for (let i = 0; i < mutationList.length; i++) {
-    if (mutationList[i].target.tagName !== "YTD-GRID-VIDEO-RENDERER") {
-      continue;
+    if (
+      mutationList[i].target.tagName === "YTD-VIDEO-RENDERER" ||
+      mutationList[i].target.tagName === "YTD-GRID-VIDEO-RENDERER"
+    ) {
+      mutationList[i].target.addEventListener("mouseenter", addButton);
+      mutationList[i].target.addEventListener("mouseleave", removeButton);
     }
-    mutationList[i].target.addEventListener("mouseenter", addButton);
-    mutationList[i].target.addEventListener("mouseleave", removeButton);
   }
 });
 observer.observe(observerTarget, observerOptions);
