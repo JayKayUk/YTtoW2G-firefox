@@ -54,7 +54,8 @@ const observer = new MutationObserver((mutationList) => {
     if (
       mutationList[i].target.tagName === "YTD-VIDEO-RENDERER" ||
       mutationList[i].target.tagName === "YTD-GRID-VIDEO-RENDERER" ||
-      mutationList[i].target.tagName === "YTD-RICH-ITEM-RENDERER"
+      mutationList[i].target.tagName === "YTD-RICH-ITEM-RENDERER" ||
+      mutationList[i].target.tagName === "YTD-COMPACT-VIDEO-RENDERER"
     ) {
       mutationList[i].target.addEventListener("mouseenter", addButton);
       mutationList[i].target.addEventListener("mouseleave", removeButton);
