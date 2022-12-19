@@ -28,11 +28,11 @@ function addButton(e) {
 function addButtonListener(videoTile) {
   const button = document.getElementById("YTtoW2G");
   button.addEventListener("click", () => {
-    sendMsgToBgScript(getDataFromTile(videoTile));
+    sendMsgToBgScript(getData_videoTile(videoTile));
   });
 }
 
-function getDataFromTile(videoTile) {
+function getData_videoTile(videoTile) {
   const videoURL = videoTile.querySelector("a#thumbnail").href;
   const thumbnailSource = videoTile.querySelector("img").src;
   const videoTitle = sanitizeString(
@@ -45,6 +45,26 @@ function getDataFromTile(videoTile) {
     thumbnailSource,
     videoTitle,
   };
+  return data;
+}
+
+function getData_videoPage() {
+  const videoURL = window.location.href;
+  const thumbnailSource = `https://img.youtube.com/vi/${videoURL.slice(
+    32
+  )}/mqdefault.jpg`;
+  const videoTitle = sanitizeString(
+    document.querySelector(
+      "h1.ytd-watch-metadata > yt-formatted-string:nth-child(1)"
+    ).textContent
+  );
+
+  const data = {
+    videoURL,
+    thumbnailSource,
+    videoTitle,
+  };
+
   return data;
 }
 
@@ -75,5 +95,31 @@ const observer = new MutationObserver(() => {
     videos[i].addEventListener("mouseenter", addButton);
     videos[i].addEventListener("mouseleave", removeButton);
   }
+
+  if (!window.location.href.match(/.*watch/g)) {
+    return;
+  }
+
+  if (document.querySelector("#YTtoW2G-videoPage")) {
+    return;
+  }
+
+  if (!document.querySelector("yt-button-shape#button-shape:not([hidden=''])"))
+    return;
+
+  const dotsButton = document.querySelector(
+    "yt-button-shape#button-shape:not([hidden=''])"
+  );
+
+  const buttonHTMLstring_videoPage = `<button id='YTtoW2G-videoPage'><img src='${browser.runtime.getURL(
+    "icons/main-icon-2048.png"
+  )}'></button>`;
+
+  dotsButton.insertAdjacentHTML("afterend", buttonHTMLstring_videoPage);
+
+  const button_videoPage = document.getElementById("YTtoW2G-videoPage");
+  button_videoPage.addEventListener("click", () => {
+    sendMsgToBgScript(getData_videoPage());
+  });
 });
 observer.observe(observerTarget, observerOptions);
