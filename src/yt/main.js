@@ -16,6 +16,12 @@ function addButton(e) {
   )}'></button>`;
   videoTile.insertAdjacentHTML("beforeend", buttonHTMLstring);
 
+  if (videoTile.tagName === "YTD-PLAYLIST-VIDEO-RENDERER") {
+    videoTile.style.position = "relative";
+    videoTile.querySelector("#YTtoW2G").style.left = "2.70em";
+    videoTile.querySelector("#YTtoW2G").style.top = "0.5em";
+  }
+
   addButtonListener(videoTile);
 }
 
@@ -27,7 +33,7 @@ function addButtonListener(videoTile) {
 }
 
 function getDataFromTile(videoTile) {
-  const videoURL = videoTile.querySelector("#thumbnail").href;
+  const videoURL = videoTile.querySelector("a#thumbnail").href;
   const thumbnailSource = videoTile.querySelector("img").src;
   const videoTitle = sanitizeString(
     videoTile.querySelector("#video-title")?.title ||
@@ -63,6 +69,7 @@ const observer = new MutationObserver(() => {
   videos.push(...document.getElementsByTagName("ytd-grid-video-renderer"));
   videos.push(...document.getElementsByTagName("ytd-rich-item-renderer"));
   videos.push(...document.getElementsByTagName("ytd-compact-video-renderer"));
+  videos.push(...document.getElementsByTagName("ytd-playlist-video-renderer"));
 
   for (let i = 0; i < videos.length; i++) {
     videos[i].addEventListener("mouseenter", addButton);
