@@ -7,7 +7,6 @@ function sanitizeString(text) {
 function addButton(e) {
   const videoTile = e.currentTarget;
 
-  // Check if button already exists
   if (videoTile.querySelector("#YTtoW2G")) {
     return;
   }
@@ -23,11 +22,11 @@ function addButton(e) {
 function addButtonListener(videoTile) {
   const button = document.getElementById("YTtoW2G");
   button.addEventListener("click", () => {
-    sendMsgToBgScript(videoTile);
+    sendMsgToBgScript(getDataFromTile(videoTile));
   });
 }
 
-function sendMsgToBgScript(videoTile) {
+function getDataFromTile(videoTile) {
   const videoURL = videoTile.querySelector("#thumbnail").href;
   const thumbnailSource = videoTile.querySelector("img").src;
   const videoTitle = sanitizeString(
@@ -35,10 +34,19 @@ function sendMsgToBgScript(videoTile) {
       videoTile.querySelector("#video-title-link")?.title ||
       videoTile.querySelector("#video-title")?.textContent
   );
+  const data = {
+    videoURL,
+    thumbnailSource,
+    videoTitle,
+  };
+  return data;
+}
+
+function sendMsgToBgScript(data) {
   browser.runtime.sendMessage({
-    url: videoURL,
-    thumb: thumbnailSource,
-    title: videoTitle,
+    url: data.videoURL,
+    thumb: data.thumbnailSource,
+    title: data.videoTitle,
   });
 }
 
@@ -49,17 +57,16 @@ function removeButton(e) {
 
 const observerOptions = { childList: true, subtree: true };
 const observerTarget = document;
-const observer = new MutationObserver((mutationList) => {
-  for (let i = 0; i < mutationList.length; i++) {
-    if (
-      mutationList[i].target.tagName === "YTD-VIDEO-RENDERER" ||
-      mutationList[i].target.tagName === "YTD-GRID-VIDEO-RENDERER" ||
-      mutationList[i].target.tagName === "YTD-RICH-ITEM-RENDERER" ||
-      mutationList[i].target.tagName === "YTD-COMPACT-VIDEO-RENDERER"
-    ) {
-      mutationList[i].target.addEventListener("mouseenter", addButton);
-      mutationList[i].target.addEventListener("mouseleave", removeButton);
-    }
+const observer = new MutationObserver(() => {
+  const videos = [];
+  videos.push(...document.getElementsByTagName("ytd-video-renderer"));
+  videos.push(...document.getElementsByTagName("ytd-grid-video-renderer"));
+  videos.push(...document.getElementsByTagName("ytd-rich-item-renderer"));
+  videos.push(...document.getElementsByTagName("ytd-compact-video-renderer"));
+
+  for (let i = 0; i < videos.length; i++) {
+    videos[i].addEventListener("mouseenter", addButton);
+    videos[i].addEventListener("mouseleave", removeButton);
   }
 });
 observer.observe(observerTarget, observerOptions);
