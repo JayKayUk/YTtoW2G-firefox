@@ -57,17 +57,16 @@ function removeButton(e) {
 
 const observerOptions = { childList: true, subtree: true };
 const observerTarget = document;
-const observer = new MutationObserver((mutationList) => {
-  for (let i = 0; i < mutationList.length; i++) {
-    if (
-      mutationList[i].target.tagName === "YTD-VIDEO-RENDERER" ||
-      mutationList[i].target.tagName === "YTD-GRID-VIDEO-RENDERER" ||
-      mutationList[i].target.tagName === "YTD-RICH-ITEM-RENDERER" ||
-      mutationList[i].target.tagName === "YTD-COMPACT-VIDEO-RENDERER"
-    ) {
-      mutationList[i].target.addEventListener("mouseenter", addButton);
-      mutationList[i].target.addEventListener("mouseleave", removeButton);
-    }
+const observer = new MutationObserver(() => {
+  const videos = [];
+  videos.push(...document.getElementsByTagName("ytd-video-renderer"));
+  videos.push(...document.getElementsByTagName("ytd-grid-video-renderer"));
+  videos.push(...document.getElementsByTagName("ytd-rich-item-renderer"));
+  videos.push(...document.getElementsByTagName("ytd-compact-video-renderer"));
+
+  for (let i = 0; i < videos.length; i++) {
+    videos[i].addEventListener("mouseenter", addButton);
+    videos[i].addEventListener("mouseleave", removeButton);
   }
 });
 observer.observe(observerTarget, observerOptions);
